@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load bulma_tags %}
+
+{% block title %}Register{% endblock title %}
+
+{% block content %}
+    <div class="columns">
+        <div class="column is-4">
+            <h1 class="title">Register Today</h1>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form|bulma }}
+                <input type="submit" class="button is-primary is-outlined" value="Register">
+            </form>
+        </div>
+        <div class="column is-1"></div>
+        <div class="column">
+            <h1 class="title">Advertise for FREE with us</h1>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo qui aliquid totam labore accusantium quibusdam deleniti dolores vel quos possimus provident porro, distinctio placeat quae sunt. Excepturi, dolor nesciunt. Dicta!</p>
+            
+            <p>After registering with your email, you can create your profile.</p>
+        </div>
+    </div>
+    
+{% endblock content %}

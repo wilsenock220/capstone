@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.title }}{% endblock title %}
+
+{% block content %}
+    <div class="box">
+        <div class="columns">
+            <div class="column is-8">
+                <figure class="image">
+                    <a href="{{ object.image.url }}">
+                        <img src="{{ object.image.url }}" alt="{{ object.title }}">
+                    </a>
+                </figure>
+            </div>
+            <div class="column">
+                <div class="field is-grouped is-grouped-multiline">
+                    <div class="control">
+                        <div class="tags has-addons">
+                            <span class="tag is-dark is-small">Apartment</span>
+                            <span class="tag is-info is-small"><a href="{{ object.apartment.get_absolute_url }}" class="has-text-white">{{ object.apartment }}</a></span>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="title">{{ object.title }}</h1>
+                <small>
+                    <span class="icon"><i class="fas fa-calendar-alt"></i></span>
+                    <span>{{ object.timestamp|date:'d M Y' }}</span> 
+                    
+                </small>
+                <br><br>
+                <h2 class="subtitle">Description</h2>
+                {{ object.description|safe|linebreaks }}
+            </div>
+        </div>
+    </div>
+
+    <div class="columns">
+        <div class="column is-8">
+            <div class="box">
+                <h1 class="title is-4">Cost details</h1>
+                <br>
+                <h1 class="subtitle is-6">Deposit</h1>
+                <p>{{ object.deposit }}</p>
+                
+                <h1 class="subtitle is-6">Rent per month</h1>
+                <p>{{ object.rent_per_month }}</p>
+
+                <h1 class="subtitle is-6">Total per year</h1>
+                <p>{{ object.rent_per_year }}</p>
+            </div>
+
+            <br>
+            
+            <!--  PROPERTY DETAILS -->
+            <div class="box">
+                <h1 class="title is-4">Property Details</h1>
+                <div class="columns">
+                    <div class="column">
+                        <h1 class="subtitle is-6">Furnishing</h1>
+                        <p>{{ object.furnishing }}</p>
+                        
+                        <h1 class="subtitle is-6">Bedrooms</h1>
+                        <p>{{ object.bedrooms }}</p>
+
+                        <h1 class="subtitle is-6">Bathrooms</h1>
+                        <p>{{ object.bathrooms }}</p>
+
+                        <h1 class="subtitle is-6">Size</h1>
+                        <p>{{ object.size }}</p>
+                    </div>
+
+                    <div class="column">
+                        <h1 class="subtitle is-6">Water heating</h1>
+                        {% if object.waterheating %}
+                            <p>Available</p>
+                        {% else %}
+                            <p>Not available</p>
+                        {% endif %}
+
+                        <h1 class="subtitle is-6">Garage</h1>
+                        {% if object.garage %}
+                            <p>Yes</p>
+                        {% else %}
+                            <p>No</p>
+                        {% endif %}
+
+                        <h1 class="subtitle is-6">Garden</h1>
+                        {% if object.garden %}
+                            <p>Yes</p>
+                        {% else %}
+                            <p>No</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AGENT DETAIL -->
+
+        <div class="column">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">
+                        <a href="#" class="has-text-black">{{ object.owner.agent.name }}</a>
+                    </div>
+                </div>
+                <div class="card-image">
+                    <figure class="image">
+                        <a href="{{ object.owner.agent.logo.url }}">
+                            <img src="{{ object.owner.agent.logo.url }}" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        <h1 class="subtitle is-6">Contact</h1>
+                        <p><strong>Phonenumber</strong>: <a href="tel:+" class="has-text-grey">{{ object.owner.agent.phonenumber }}</a></p>
+                        <p><strong>Email</strong>: <a href="mailto:" class="has-text-grey">{{ object.owner.email }}</a></p>
+                        <hr>
+                        {% if not object.owner.agent.verified %}
+                            <small>Agent has not been verified yet</small>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

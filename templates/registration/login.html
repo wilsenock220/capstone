@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load bulma_tags %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+    
+    <h1 class="title has-text-centered">Login</h1>
+    
+    <br>
+    
+    <div class="columns">
+        <div class="column is-three-fifths is-offset-one-fifth">
+            <div class="card">
+                <div class="card-content">
+                    <div class="content">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            {{ form|bulma }}
+                            <input type="submit" class="button is-primary is-outlined" value="Login">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}      

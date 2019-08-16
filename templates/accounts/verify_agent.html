@@ -1,0 +1,19 @@
+{% extends 'dashboard.html' %}
+
+{% block title %}Verify {{ object.name }}{% endblock title %}
+
+{% block box %}
+    <div class="box">
+        <h1 class="subtitle">Confirm verification for "{{ object.name }}"</h1>
+        <br>
+        <a href="{% url 'account:confirm' object.slug %}" class="button is-primary is-outlined">Confirm</a>
+    </div>
+    <div class="box">
+        <div class="columns">
+            <div class="column">
+                <figure class="image">
+                    <img src="{{ object.logo.url }}" alt="">
+                </figure>
+            </div>
+    </div>
+{% endblock box %}

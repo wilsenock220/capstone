@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load bulma_tags %}
+
+{% block title %}Create your profile{% endblock title %}
+
+{% block content %}
+    <div class="columns is-8">
+        <div class="column is-4">
+            <h1 class="title">Create your profile</h1>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form|bulma }}
+                <input type="submit" class="button is-primary is-outlined" value="Submit">
+            </form>
+        </div>
+        <div class="column">
+            <h1 class="title">Tell us about yourself</h1>
+        </div>
+    </div>
+{% endblock content %}

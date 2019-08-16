@@ -1,0 +1,40 @@
+{% extends 'dashboard.html' %}
+
+{% block title %}{% endblock title %}
+
+{% block box %}
+    {% for object in apartment_list %}
+    <div class="box">
+        <article class="media">
+            <div class="media-left">
+                <figure class="image is-128x128">
+                    <a href="{{ object.get_absolute_url }}">
+                        <img src="{{ object.image.url }}" alt="">
+                    </a>
+                </figure>
+            </div>
+            <div class="media-content">
+                <div class="content">
+                    <p>
+                        <small><strong>added {{ object.timestamp|timesince }} ago</strong></small>
+                        <br>
+                        <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+                    </p>
+                </div>
+                <nav class="level is-mobile">
+                    <div class="level-left">
+                        <!-- UPDate -->
+                        <a href="{% url 'account:update_apartment' object.slug %}" class="level-item">
+                            <span class="icon"><i class="fas fa-edit"></i></span>
+                        </a>
+                        <!-- Delete -->
+                        <a href="{% url 'account:delete_apartment' object.slug %}" class="level-item">
+                            <span class="icon"><i class="fas fa-trash-alt"></i></span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </article>
+    </div>
+    {% endfor %}
+{% endblock box %}

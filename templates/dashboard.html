@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/bulmaswatch/sandstone/bulmaswatch.min.css">
+
+    <!-- Fontawesome CDN -->
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=VT323|Share+Tech+Mono" rel="stylesheet">
+    
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body style="font-family: 'Share Tech Mono', monospace;">
+    <!-- NAV -->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="{% url 'account:dashboard' %}" style="font-family: 'VT323', monospace; font-size: 34px">  
+                    Dashboard
+                </a>
+            </div>
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    {% if request.user.is_agent %}
+                    <a href="" class="navbar-item">Property Agent</a>
+                    <a href="{% url 'account:house_list' %}" class="navbar-item">My Houses</a>
+                    <a href="{% url 'account:apartmentunit_list' %}" class="navbar-item">My Apartment Units</a>
+                    {% else %}
+                    <a href="" class="navbar-item">Content Manager</a>
+                    <a href="{% url 'account:apartment_list' %}" class="navbar-item">Apartments</a>
+                    <a href="{% url 'account:article_list' %}" class="navbar-item">Articles</a>
+                    {% endif %}
+                </div>
+                
+                <div class="navbar-end">
+                    <a href="{% url 'home' %}" class="navbar-item">
+                        <span class="icon"><i class="fas fa-home"></i></span>
+                        <span>Website</span>
+                    </a>
+                    <a href="{% url 'logout' %}" class="navbar-item">
+                        <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN section -->
+    <section class="section">
+        <div class="container">
+            <!-- VERIFICATION REMINDER FOR AGENT -->
+            {% if not request.user.agent.verified and request.user.is_agent %}
+            <div class="notification is-danger has-text-white">
+                Your account has not been verified yet. Please verify by oploading a document <a href="{% url 'account:submit_document' %}">here</a>
+            </div>
+            {% endif %}
+
+            <!-- Welcoming message -->
+            <div class="notification">
+                {% if request.user.is_agent %}
+                    <span class="icon"><i class="far fa-user-circle"></i></span>
+                    <span>Welcome {{ request.user.agent.name }}</span>
+                {% else %}
+                    <span class="icon"><i class="far fa-user-circle"></i></span>
+                    <span>Welcome {{ request.user.contentmanager }}</span>
+                {% endif %}
+            </div>
+
+            <!-- DISPLAY success messages -->
+            {% include 'snippets/messages.html' %}
+        
+            <div class="columns">
+                <!-- Side panel -->
+                <div class="column is-3">
+                    <!-- User Name -->
+                    <div class="card">
+                        <div class="card-image">
+                            <figure class="image">
+                                {% if request.user.is_agent %}
+                                    <img src="{{ request.user.agent.logo.url }}" alt="">
+                                {% else %}
+                                    <img src="{{ request.user.contentmanager.avatar }}" alt="">
+                                {% endif %}
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="content">
+                                {% if request.user.is_agent %}
+                                    <h1 class="subtitle is-5">{{ request.user.agent.name }}</h1>
+                                    <small>
+                                        {% if request.user.agent.verified %}
+                                        <hr>
+                                        Verified
+                                        {% endif %}
+                                    </small>
+                                {% else %}
+                                    <h1 class="title is-5">{{ request.user.contentmanager }}</h1>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <nav class="panel">
+                        <p class="panel-heading">Quick Actions</p>
+                        
+                        {% if request.user.is_agent %}
+                        <!-- TABS for agents -->
+                        <div class="panel-block">
+                            <a href="{% url 'account:create_house' %}">
+                                <span class="icon"><i class="fas fa-plus"></i></span>
+                                <span>Add House</span>
+                            </a>
+                        </div>
+                        <div class="panel-block">
+                            <a href="{% url 'account:create_unit' %}">
+                                <span class="icon"><i class="fas fa-plus"></i></span>
+                                <span>Add Apartment Unit</span>
+                            </a>
+                        </div>
+                        
+                        {% else %}
+                        <!-- TABS for staff -->
+                        <div class="panel-block">
+                            <a href="{% url 'account:create_apartment' %}">
+                                <span class="icon"><i class="fas fa-plus"></i></span>
+                                <span>Add Apartment</span>
+                            </a>
+                        </div>
+                        <div class="panel-block">
+                            <a href="{% url 'account:write_article' %}">
+                                <span class="icon"><i class="fas fa-pen-nib"></i></span>
+                                <span>Write Post</span> 
+                            </a>
+                        </div>
+                        <div class="panel-block">
+                            <a href="{% url 'account:document_list' %}">
+                            <span class="icon"><i class="fas fa-paperclip"></i></span>
+                            <span>Documents & Verifications</span> 
+                            </a>
+                        </div>
+
+                        {% endif %}
+                        
+                        <div class="panel-block">
+                            <a href="{% url 'logout' %}">
+                                <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+                <!-- Dashboard overview -->
+                <div class="column">
+                    {% if request.user.is_agent %}
+                    
+                    {% else %}
+                    <div class="box">
+                        <nav class="level">
+                            <div class="level-item has-text-centered">
+                                <div>
+                                    <p class="heading">Articles</p>
+                                    <p class="title">{{ articles_count }}</p>
+                                </div>
+                            </div>
+                            <div class="level-item has-text-centered">
+                                <div>
+                                    <p class="heading">Apartments</p>
+                                    <p class="title">{{ apartment_count }}</p>
+                                </div>
+                            </div>
+                            <div class="level-item has-text-centered">
+                                <div>
+                                    <p class="heading">Apartment Units</p>
+                                    <p class="title">{{ apartmentunit_count }}</p>  
+                                </div>
+                            </div>
+                            <div class="level-item has-text-centered">
+                                <div>
+                                    <p class="heading">Houses</p>
+                                    <p class="title">{{ house_count }}</p>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    {% endif %}
+
+                    {% block box %}
+                    {% endblock box %}   
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

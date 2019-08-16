@@ -1,0 +1,51 @@
+{% extends 'dashboard.html' %}
+
+{% block title %} {% endblock title %}
+
+{% block box %}
+
+<div class="box">
+    <h1 class="title">Documents & Verification</h1>
+    
+    {% if not document_list %}
+    <p>Nothing</p>
+    {% else %}
+    <table class="table is-fullwidth is-hoverable">
+        <thead>
+            <tr>
+                <th>Property Agent</th>
+                <th>File</th>
+                <th>Date</th>
+                <th>Verified</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in document_list %}
+            <tr>
+                <td>{{ object.user.agent.name }}</td>
+                <td><a href="{{ object.document.url }}">{{ object.name }}</a> </td>
+                <td>{{ object.timestamp|date:'d M Y' }}</td>
+                <td>
+                    {% if object.user.agent.verified %}
+                    <span class="icon"><i class="fas fa-check"></i></span>
+                    {% else %}
+                    <span class="icon"><i class="fas fa-times"></i></span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if object.user.agent.verified %}
+                    No actions required
+                    {% else %}
+                    <a href="{% url 'account:verify_agent' object.user.agent.slug %}">Verify</a>
+                    {% endif %}
+                </td>
+        
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif%}
+</div>
+
+{% endblock box %}

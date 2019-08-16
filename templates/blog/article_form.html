@@ -1,0 +1,27 @@
+{% extends 'dashboard.html' %}
+
+{% load bulma_tags %}
+
+{% block title %}Write new post{% endblock title %}
+
+{% block box %}
+    
+    {% if not object %}
+        <div class="notification">
+            This will be your first post! Happy writing!
+        </div>
+    {% endif %}
+    
+    <div class="box">
+        <h1 class="title">
+            <span class="icon"><i class="fas fa-pen-nib"></i></span>
+            <span>Write</span>
+        </h1>
+        <br>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|bulma }}
+            <input type="submit" value="Post" class="button is-primary is-outlined">
+        </form>
+    </div>
+{% endblock box %}

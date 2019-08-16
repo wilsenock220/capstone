@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.title }}{% endblock title %}
+
+{% block content %}
+<div class="columns">
+    <div class="column is-three-fifths is-offset-one-fifth">
+        <div class="box">
+            <figure class="image">
+                <img src="{{ object.image.url }}" alt="">
+            </figure>
+        </div>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-three-fifths is-offset-one-fifth">
+        <div class="box">
+            <h1 class="title">{{ object.title|title }}</h1>
+            <h2 class="subtitle">{{ object.subtitle }}</h2>
+            <small>
+                <span class="icon"><i class="fas fa-calendar-alt"></i></span>
+                <span>{{ object.timestamp|date:'d M Y' }}</span>
+            </small>
+            <br><br>
+            {{ object.body|linebreaks|safe }}
+        </div>
+        <!-- AUTHOR BOX -->
+        <div class="box">
+            <p class="subtitle">About the author</p>
+            <article class="media">
+                <div class="media-left">
+                    <figure class="image is-64x64">
+                        <img src="{{ object.user.contentmanager.avatar }}" alt="">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                        <strong>{{ object.user.contentmanager }}</strong>
+                        <br>
+                        {{ object.user.contentmanager.bio }}
+                        </p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load bulma_tags %}
+
+{% block title %}Register as content manager{% endblock %}
+
+{% block content %}
+    <div class="box">
+        <div class="columns">
+            <div class="column is-4">
+                <h1 class="title">Become a Content Manager</h1>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ form|bulma }}
+                    <input type="submit" value="Register" class="button is-primary is-outlined">
+                </form>
+            </div>
+            <div class="column">
+                <h1 class="title">Your responsebilities</h1>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

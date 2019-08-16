@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Apartments{% endblock title %}
+
+{% block content %}
+    <div class="box">
+        <h1 class="title">Apartments in Nairobi</h1>
+        <p></p>
+    </div>
+
+    <!-- INFO when DB is not filled with aparment object yet -->
+    {% if not apartment_list %}
+    <div class="notification">
+        No apartments yet.
+    </div>
+    {% endif %}
+
+    <div class="columns is-multiline">
+        <!-- Loop through apartment objects -->
+        {% for object in apartment_list %}
+        <div class="column is-3">
+            <div class="card">
+                <div class="card-image">
+                    <figure class="image">
+                        <a href="{{ object.get_absolute_url }}">
+                            <img src="{{ object.image.url }}" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <h1 class="subtitle">{{ object.name }}</h1>
+                </div>
+            </div>
+        </div>   
+        {% endfor %}
+    </div>
+{% endblock content %}

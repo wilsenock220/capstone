@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    {{ object.title }}
+{% endblock title %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-content">
+            <div class="content">
+                <div class="columns">
+                    <div class="column is-8">
+                        <figure class="image">
+                            <a href="{{ object.image.url }}">
+                                <img src="{{ object.image.url }}" alt="{{ object.title }}-image">
+                            </a>
+                        </figure>
+                    </div>
+                    <div class="column">
+                        <h1 class="title">{{ object.title }}</h1>
+                        <small>added on {{ object.timestamp|date:'d M Y' }}</small>
+                        <br><br>
+                        {{ object.description|linebreaks }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+    <!-- costs card -->
+    
+    <div class="columns">
+        <div class="column is-8">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">Costs</div>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        <h1 class="subtitle is-6">Deposit</h1>
+                        <p>{{ object.deposit }}</p>
+                        
+                        <h1 class="subtitle is-6">Rent per month</h1>
+                        <p>{{ object.rent_per_month }}</p>
+        
+                        <h1 class="subtitle is-6">Total per year</h1>
+                        <p>{{ object.rent_per_year }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            
+            <!--  PROPERTY DETAILS -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">Details</div>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        <div class="columns">
+                            <div class="column">
+                                <h1 class="subtitle is-6">Furnishing</h1>
+                                <p>{{ object.furnishing }}</p>
+        
+                                <h1 class="subtitle is-6">Bedrooms</h1>
+                                <p>{{ object.bedrooms }}</p>
+        
+                                <h1 class="subtitle is-6">Bathrooms</h1>
+                                <p>{{ object.bathrooms }}</p>
+
+                                <h1 class="subtitle is-6">Size</h1>
+                                <p>{{ object.size }}</p>
+                            </div>
+
+                            <div class="column">
+                                <h1 class="subtitle is-6">Water heating</h1>
+                                {% if object.waterheating %}
+                                    <p>Available</p>
+                                {% else %}
+                                    <p>Not available</p>
+                                {% endif %}
+
+                                <h1 class="subtitle is-6">Garage</h1>
+                                {% if object.garage %}
+                                    <p>Yes</p>
+                                {% else %}
+                                    <p>No</p>
+                                {% endif %}
+
+                                <h1 class="subtitle is-6">Garden</h1>
+                                {% if object.garden %}
+                                    <p>Yes</p>
+                                {% else %}
+                                    <p>No</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AGENT DETAIL -->
+
+        <div class="column">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">
+                        <a href="#" class="has-text-black">{{ object.owner.agent.name }}</a>
+                    </div>
+                </div>
+                <div class="card-image">
+                    <figure class="image">
+                        <a href="{{ object.owner.agent.logo.url }}">
+                            <img src="{{ object.owner.agent.logo.url }}" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        <h1 class="subtitle is-6">Contact</h1>
+                        <p><strong>Phonenumber</strong>: <a href="tel:+" class="has-text-grey">{{ object.owner.agent.phonenumber }}</a></p>
+                        <p><strong>Email</strong>: <a href="mailto:" class="has-text-grey">{{ object.owner.email }}</a></p>
+                        <hr>
+                        {% if not object.owner.agent.verified %}
+                            <small>Agent has not been verified yet</small>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">About</div>
+                </div>
+                <div class="card-content">
+                    <div class="content">
+                        {{ object.owner.agent.about }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

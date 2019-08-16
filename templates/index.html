@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load article_tags %}
+{% load properties_tags %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+    <div class="columns is-multiline">
+        
+        <div class="column is-6">
+            <div class="card">
+                <div class="card-image">
+                    <figure class="image">
+                        <a href="{% url 'properties:house_list' %}">
+                            <img src="{% static 'img/house.jpg' %}" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="content has-text-centered">
+                        <p>Search for <a href="{% url 'properties:house_list' %}">houses</a> to rent</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="column is-6">
+            <div class="card">
+                <div class="card-image">
+                    <figure class="image">
+                        <a href="{% url 'properties:apartment_list' %}">
+                            <img src="{% static 'img/unit.jpg' %}" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="content has-text-centered">
+                        <p>Search for <a href="{% url 'properties:apartment_list' %}">Apartment units</a> to rent</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="column is-12 has-text-centered">
+            <hr>
+            <h1 class="title">Latest blog posts</h1>
+            <p>See<a href="{% url 'blog:article_list' %}"> all</a></p>
+        </div>
+
+        {% latest_articles as article_list %}
+        <!-- Iterate through articles via custom template tag -->
+        {% for object in article_list %}
+        <div class="column is-4">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">{{ object.title }}</div>
+                </div>
+                <div class="card-image">
+                    <figure class="image is-16by9">
+                        <a href="{{ object.get_absolute_url }}">
+                            <img src="{{ object.image.url }}" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-48x48">
+                                <img src="{{ object.user.contentmanager.avatar }}" alt="">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <strong>by {{ object.user.contentmanager }}</strong><br>
+                                    <span class="icon"><i class="fas fa-calendar-alt"></i></span>
+                                    <span>{{ object.timestamp|date:'d M Y' }}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    
+        {% apartmentunit_list as unit_list %}
+        {% if unit_list %}
+        <div class="column is-12 has-text-centered">
+                <h1 class="title">Newest Apartment Units</h1>
+            </div>
+        </div>
+
+        <!-- Iterate through latest apartment units via custom template tag -->
+        
+        {% for unit in unit_list %}
+        <div class="column is-4">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">{{ unit.title}}</div>
+                </div>
+                <div class="card-image">
+                    <a href="{{ unit.get_absolute_url }}">
+                        <figure class="image is-5by3">
+                            <img src="{{ unit.image.url }}" alt="{{ unit.title }}">
+                        </figure>
+                    </a>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-48x48">
+                                <img src="{{ unit.owner.agent.logo.url }}" alt="">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p class="title is-5">{{ unit.owner.agent.name }}</p>
+                            <p class="subtitle is-6">added on {{ unit.timestamp|date:'d M Y'}}</p>
+                        </div>
+                    </div>
+                    <div class="content">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <div class="column is-12 has-text-centered">
+            <h1 class="title">Newest houses</h1>
+        </div>
+    
+        {% house_list as house_list %}
+        {% for house in house_list %}
+        <div class="column is-4">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">{{ house.title}}</div>
+                </div>
+                <div class="card-image">
+                    <a href="{{ house.get_absolute_url }}">
+                        <figure class="image is-5by3">
+                            <img src="{{ house.image.url }}" alt="{{ house.title }}">
+                        </figure>
+                    </a>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-48x48">
+                                <img src="{{ house.owner.agent.logo.url }}" alt="">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p class="title is-5">{{ house.owner.agent.name }}</p>
+                            <p class="subtitle is-6">added on {{ house.timestamp|date:'d M Y'}}</p>
+                        </div>
+                    </div>
+                    <div class="content">
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock content %}

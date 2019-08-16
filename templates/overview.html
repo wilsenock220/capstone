@@ -1,0 +1,16 @@
+{% extends 'dashboard.html' %}
+
+{% block title %}{% endblock title %}
+
+{% block box %}
+    <div class="box">
+        {% if request.user.is_agent %}
+        <h1 class="title">Managing your properties</h1>
+        <div class="columns">
+            <div class="column is-4">
+                <p>Your personal CMS to manage all your properties. </p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock box %}

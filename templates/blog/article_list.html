@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Articles{% endblock title %}
+
+{% block content %}
+    <div class="box">
+        <h1 class="title">Our blog</h1>
+        <p>Read about Jakarta</p>
+    </div>
+    {% if not article_list %}
+    <p class="has-text-centered">No blog post yet.</p>
+    {% endif %}
+
+    <hr>
+
+    <div class="columns is-multiline">
+        {% for object in article_list %}
+        <div class="column is-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">{{ object.title }}</div>
+                </div>
+                <div class="card-image">
+                    <figure class="image is-16by9">
+                        <a href="{{ object.get_absolute_url }}">
+                            <img src="{{ object.image.url }}" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-48x48">
+                                <img src="{{ object.user.contentmanager.avatar }}" alt="">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p>
+                                <strong>{{ object.user.contentmanager }}</strong>
+                                <br>
+                                <small>added on {{ object.timestamp|date:'d M Y'}}</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

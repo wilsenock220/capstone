@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Houses{% endblock title %}
+
+{% block content %}
+    <div class="box">
+        <h1 class="title">Our houses in Nairobi</h1>
+        <p>Lorem ipsum dolor sit amet, vidit laboramus has no, graeci facilis albucius ad mei, cum veritus pertinacia ut. Id quo vide assum evertitur, sumo clita efficiendi vim ea. Verear feugiat ullamcorper sit no. Vix malis deleniti luptatum ut, magna percipit inciderint cu nam. Et sale vitae virtute quo. Sed eu constituto sadipscing, vim dolorem nominavi detraxit ea.
+        Ea mel salutandi cotidieque, liber ignota alterum et sed. Eos tritani prodesset id. Vocent lucilius consetetur eu eum, tractatos salutatus gubergren eum eu. Sea ei denique scriptorem, cum et discere partiendo voluptatum. Diam reprimique signiferumque ex qu</p>
+    </div>
+
+    {% if not house_list %}
+    <div class="notification">
+        No houses yet.
+    </div>
+    {% endif %}
+
+    <div class="columns is-multiline is-4">
+        {% for object in house_list %}
+        <div class="column is-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">{{ object.title }}</div>
+                </div>
+                <div class="card-image">
+                    <figure class="image is-5by3">
+                        <a href="{{ object.get_absolute_url }}">
+                            <img src="{{ object.image.url }}" alt="">
+                        </a>
+                    </figure>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-48x48">
+                                <img src="{{ object.owner.agent.logo.url }}" alt="">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p>
+                                <strong>{{ object.owner.agent.name }}</strong>
+                                <br>
+                                <small>added on {{ object.timestamp|date:'d M Y'}}</small>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="content">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

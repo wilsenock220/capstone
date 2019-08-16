@@ -1,0 +1,7 @@
+{% if messages %}
+    {% for message in messages  %}
+    <div class="notification is-success has-text-white">
+        {{ message }}
+    </div>    
+    {% endfor %}
+{% endif %}

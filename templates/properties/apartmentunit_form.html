@@ -1,0 +1,17 @@
+{% extends 'dashboard.html' %}
+
+{% load bulma_tags %}
+
+{% block title %}Add new unit{% endblock title %}
+
+{% block box %}
+    <div class="box">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1 class="title">Add new apartment unit</h1>
+            <br>
+            {{ form|bulma }}
+            <input type="submit" class="button is-primary is-outlined" value="Submit">
+        </form>
+    </div>
+{% endblock box %}

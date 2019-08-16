@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.name }}{% endblock title %}
+
+{% block content %}
+    <div class="box">
+        <h1 class="title has-text-centered">{{ object.name }}</h1>
+        <figure class="image is-16by9">
+            <img src="{{ object.image.url }}" alt="">
+        </figure>
+    </div>
+    <div class="box">
+        <div class="columns">
+            <div class="column is-6">
+                <h1 class="title">Apartment Facilitites</h1>
+                <strong>Floors</strong><br>
+                <p>{{ object.floors }}</p> 
+                
+                <strong>Shopping Mall</strong><br>
+                {% if object.shopping_mall %}
+                    <p>Yes</p>
+                {% else %}
+                    <p>No</p>
+                {% endif %}
+                
+                <strong>Gym</strong><br>
+                {% if object.gym %}
+                    <p>Yes</p>
+                {% else %}
+                    <p>No</p>
+                {% endif %}
+                
+                <strong>Swimming Pool</strong><br>
+                {% if object.swimming_pool %}
+                    <p>Yes</p>
+                {% else %}
+                    <p>No</p>
+                {% endif %}                
+                
+                <strong>Jogging Track</strong><br>
+                {% if object.jogging_track %}
+                    <p>Yes</p>
+                {% else %}
+                    <p>No</p>
+                {% endif %}                
+                
+                <strong>Laundry</strong><br>
+                {% if object.laundry %}
+                    <p>Yes</p>
+                {% else %}
+                    <p>No</p>
+                {% endif %}                
+                
+                <strong>Security</strong>
+                {% if object.security %}
+                    <p>Yes</p>
+                {% else %}
+                    <p>No</p>
+                {% endif %}
+
+                <strong>Available units</strong><br>
+                {{ object.units.count }}
+            </div>
+            <div class="column is-6">
+                <h1 class="title">Description</h1>
+                {{object.description|linebreaks}}
+            </div>
+        </div>
+    </div>
+
+    <h1 class="title has-text-centered">{{ object.name }} Units</h1>
+
+    <!-- UNITS -->
+    <div class="columns">
+        {% for unit in object.units.all %}
+        <div class="column is-3">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-header-title">{{ unit.title}}</div>
+                </div>
+                <div class="card-image">
+                    <a href="{{ unit.get_absolute_url }}">
+                        <figure class="image is-5by3">
+                            <img src="{{ unit.image.url }}" alt="{{ unit.title }}">
+                        </figure>
+                    </a>
+                </div>
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <figure class="image is-48x48">
+                                <img src="{{ unit.owner.agent.logo.url }}" alt="">
+                            </figure>
+                        </div>
+                        <div class="media-content">
+                            <p class="title is-5">{{ unit.owner.agent.name }}</p>
+                            <p class="subtitle is-6">added on {{ unit.timestamp|date:'d M Y'}}</p>
+                        </div>
+                    </div>
+                    <div class="content">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if not object.units.all %}
+    <div class="notification">
+        No units for this apartment yet
+    </div>
+    {% endif %}
+{% endblock content %}

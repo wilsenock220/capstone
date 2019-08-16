@@ -1,0 +1,20 @@
+{% extends 'dashboard.html' %}
+
+{% load bulma_tags %}
+
+{% block title %}Update {{ object.title }}{% endblock title %}
+
+{% block box %}
+    <div class="box">
+        <figure class="image">
+            <img src="{{ object.image.url }}" alt="">
+        </figure>
+        <br>
+        <form action="" method="post" enctype="multipart/form-data">
+            <h1 class="title">Update "{{ object.title }}"</h1>
+            {% csrf_token %}
+            {{ form|bulma }}
+            <input type="submit" value="Update" class="button is-primary is-outlined">
+        </form>
+    </div>
+{% endblock box %}

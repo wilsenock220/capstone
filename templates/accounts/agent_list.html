@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Overview Agents{% endblock %}
+
+{% block content %}
+    <h1 class="title">Our agents</h1>
+    <div class="columns is-multiline">
+        {% for object in agent_list %}
+            <div class="column is-2">
+                <a href="">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-title">{{ object.name }}</div>
+                    </div>
+                    <div class="card-image">
+                        <figure class="image is-5by3">
+                            <img src="{{ object.logo.url }}" alt="{{ object.name }}">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="content">
+                            {{ object.apartmentunits.count }}
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

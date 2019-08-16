@@ -1,0 +1,38 @@
+<!-- LIST OF ARTICLES FOR THE CONTENT MANAGER -->
+{% extends 'dashboard.html' %}
+
+{% block title %}My articles{% endblock title %}
+
+{% block box %}
+    {% for object in article_list %}
+        <div class="box">
+            <div class="media">
+                <div class="media-left">
+                    <figure class="image is-128x128">
+                        <img src="{{ object.image.url }}" alt="">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <small><strong>posted {{ object.timestamp|timesince }}</strong></small>
+                            <br>
+                            <a href="{{ object.get_absolute_url }}">{{ object.title }}</a>
+                        </p>
+                    </div>
+                    <nav class="level is-mobile">
+                        <div class="level-left">
+                            <!-- UPDate -->
+                            <a href="{% url 'account:update_article' object.slug %}" class="level-item">
+                                <span class="icon"><i class="fas fa-edit"></i></span>
+                            </a>
+                            <a href="{% url 'account:delete_article' object.slug %}" class="level-item">
+                                <span class="icon"><i class="fas fa-trash-alt"></i></span>
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
